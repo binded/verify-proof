@@ -3,7 +3,7 @@
     "chainpoint_version": "1.0",
     "hash_type": "SHA-256",
     "merkle_root": "00df353823dae3a197ce2760b864fbcd75463ede12da367301678a4cc161f9e0",
-    "tx_id": "3de274509ee718b59672ab26a7bb12608734a455389606af89d86595a5b672e5",
+    "tx_id": "0de274509ee718b59672ab26a7bb12608734a455389606af89d86595a5b672e5",
     "timestamp": 1463619503
   },
   "target": {

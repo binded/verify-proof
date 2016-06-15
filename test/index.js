@@ -67,6 +67,27 @@ test('isDataHashValid', (t) => {
   invalid.isDataHashValid().then((isValid) => t.notOk(isValid)).catch(t.fail)
 })
 
+test('isTxValid', (t) => {
+  t.plan(3)
+  const text = blockaiVerify(testData.text)
+  const confirmed = blockaiVerify(testData.confirmed)
+  const invalid = blockaiVerify(testData.invalid)
+  text.isTxValid().then((isValid) => t.ok(isValid)).catch(t.fail)
+  confirmed.isTxValid().then((isValid) => t.ok(isValid)).catch(t.fail)
+  invalid.isTxValid().then((isValid) => t.notOk(isValid)).catch(t.fail)
+})
+
+test('getConfirmations', (t) => {
+  t.plan(3)
+  const text = blockaiVerify(testData.text)
+  const confirmed = blockaiVerify(testData.confirmed)
+  const invalid = blockaiVerify(testData.invalid)
+  // text.getConfirmations().then((confirms) => console.log(confirms)).catch(t.fail)
+  text.getConfirmations().then((confirms) => t.ok(confirms > 100)).catch(t.fail)
+  confirmed.getConfirmations().then((confirms) => t.ok(confirms > 100)).catch(t.fail)
+  invalid.getConfirmations().then((confirms) => t.equal(confirms, 0)).catch(t.fail)
+})
+
 test('close http server', (t) => {
   httpServer.close()
   t.end()
