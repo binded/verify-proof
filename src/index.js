@@ -112,9 +112,41 @@ const blockaiVerify = (_proof, {
     )
 
   // Combines method above to give detailed report about proof
-  const analyze = () => {
+  const analyze = () => Promise.resolve().then(() => {
+    const tmp = {
+      isTargetHashValid,
+      isMerkleRootValid,
+      isDataHashValid,
+      isTxValid,
+    }
+    const validateKeys = Object.keys(tmp)
+    const validateFns = Object.keys(tmp).map((key) => tmp[key])
 
-  }
+    const validateTasks = validateFns.map(fn => fn())
+
+    return Promise
+      .all(validateTasks)
+      .then(
+        results => results.reduce(
+          (acc, val, idx) => ({ ...acc, [validateKeys[idx]]: val }),
+          {}
+        )
+      )
+      .then((validations) => (
+        getConfirmations().then((confirmations) => ({
+          validations,
+          confirmations,
+        }))
+      ))
+      .then((results) => {
+        const { validations } = results
+        const isValid = Object.keys(validations).every((key) => validations[key])
+        return {
+          ...results,
+          isValid,
+        }
+      })
+  })
 
   return {
     isTargetHashValid,

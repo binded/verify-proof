@@ -24,6 +24,7 @@ const loadAllTestData = (baseUrl) => [
   'confirmed',
   'invalid',
   'text',
+  'somewhatvalid',
 ].reduce((acc, name) => ({
   ...acc,
   [name]: loadTestData(name, baseUrl),
@@ -86,6 +87,60 @@ test('getConfirmations', (t) => {
   text.getConfirmations().then((confirms) => t.ok(confirms > 100)).catch(t.fail)
   confirmed.getConfirmations().then((confirms) => t.ok(confirms > 100)).catch(t.fail)
   invalid.getConfirmations().then((confirms) => t.equal(confirms, 0)).catch(t.fail)
+})
+
+test('analyze', (t) => {
+  t.plan(3)
+  const text = blockaiVerify(testData.text)
+  const invalid = blockaiVerify(testData.invalid)
+  const somewhatvalid = blockaiVerify(testData.somewhatvalid)
+  text
+    .analyze()
+    .then((results) => {
+      results.confirmations = 4097
+      t.deepEqual(results, {
+        validations: {
+          isTargetHashValid: true,
+          isMerkleRootValid: true,
+          isDataHashValid: true,
+          isTxValid: true,
+        },
+        confirmations: 4097,
+        isValid: true,
+      }, 'text')
+    })
+    .catch(t.fail)
+  invalid
+    .analyze()
+    .then((results) => {
+      t.deepEqual(results, {
+        validations: {
+          isTargetHashValid: false,
+          isMerkleRootValid: false,
+          isDataHashValid: false,
+          isTxValid: false,
+        },
+        confirmations: 0,
+        isValid: false,
+      })
+    }, 'invalid')
+    .catch(t.fail)
+  somewhatvalid
+    .analyze()
+    .then((results) => {
+      results.confirmations = 4097
+      t.deepEqual(results, {
+        validations: {
+          isTargetHashValid: true,
+          isMerkleRootValid: false,
+          isDataHashValid: true,
+          isTxValid: false,
+        },
+        confirmations: 4097,
+        isValid: false,
+      }, 'somewhatvalid')
+    })
+    .catch(t.fail)
 })
 
 test('close http server', (t) => {
