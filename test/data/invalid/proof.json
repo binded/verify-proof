@@ -1,0 +1,65 @@
+{
+  "header": {
+    "chainpoint_version": "1.0",
+    "hash_type": "SHA-256",
+    "merkle_root": "00df353823dae3a197ce2760b864fbcd75463ede12da367301678a4cc161f9e0",
+    "tx_id": "3de274509ee718b59672ab26a7bb12608734a455389606af89d86595a5b672e5",
+    "timestamp": 1463619503
+  },
+  "target": {
+    "target_hash": "6d7040734a32a06f1f760824656863fe3445e4c02f4fbedf7d8d32d76b99a87b",
+    "target_proof": [
+      {
+        "left": "6d7040734a32a06f1f760824656863fe3445e4c02f4fbedf7d8d32d76b99a87b",
+        "right": "6363e1a67a6f52766ebe43ce2f0663b2c6c082e5c07534c1e3942e499afab999",
+        "parent": "9ff32604cfd2b4a2736e658b23b20dd8063efe57fd4c9c8fa4b341b1bb6554fc"
+      },
+      {
+        "left": "9ff32604cfd2b4a2736e658b23b20dd8063efe57fd4c9c8fa4b341b1bb6554fc",
+        "right": "939243508b3217506ae013b82229aa5311b829ad2fe488fb9d64d279f1327c32",
+        "parent": "45084b8e236f1d85a6dc437e33418e95ef693b4844b5ccc388a8b704df734910"
+      },
+      {
+        "left": "45084b8e236f1d85a6dc437e33418e95ef693b4844b5ccc388a8b704df734910",
+        "right": "749d7a42d9416c7c7094cfeea0a516d488109744d380e952a491e84c7635e726",
+        "parent": "eeec7a2c6e7a883be0da6fe92142e0c60df6c97ac7368ad467d39ed57e969a6e"
+      },
+      {
+        "left": "eeec7a2c6e7a883be0da6fe92142e0c60df6c97ac7368ad467d39ed57e969a6e",
+        "right": "db2eb7eb27ce6bffc00f6af1dc386e678696f447a00c95f618b57b0ba1983ad5",
+        "parent": "e7cefa67d030013f981b5ba883f4a912f46c3def3ba50e340f7d39d728d7e044"
+      },
+      {
+        "left": "d2e8c38684fd10578529b02ef901a192ee3e194ce32099b53699a6fa4616a85e",
+        "right": "e7cefa67d030013f981b5ba883f4a912f46c3def3ba50e340f7d39d728d7e044",
+        "parent": "8b213629fdf91626fd5d380a3e0ef204e89dc80a71cc5ab9db684b7ac38dbe71"
+      },
+      {
+        "left": "242703b045d7ea558314f7e0c13cece395ddcdd75a5d4d6efd9b83a07454898f",
+        "right": "8b213629fdf91626fd5d380a3e0ef204e89dc80a71cc5ab9db684b7ac38dbe71",
+        "parent": "994c7f6ddca52e5dae80195bcf143948a4a0b39fc9526123b0746ddd0c45ba82"
+      },
+      {
+        "left": "d01e9426bbc23df56bb91f293878c75e88966edd050d27eb1b0b80ca5df1f74a",
+        "right": "994c7f6ddca52e5dae80195bcf143948a4a0b39fc9526123b0746ddd0c45ba82",
+        "parent": "5fb82a5983cafe4b2f66bce288a77425bf0d7eb0ba0c9559937fc31aa9018718"
+      },
+      {
+        "left": "5fb82a5983cafe4b2f66bce288a77425bf0d7eb0ba0c9559937fc31aa9018718",
+        "right": "14d8385bd67bc1842fe91deef702fc372daff50c15e3e4feeea9e26bf7db3275",
+        "parent": "05df353823dae3a197ce2760b864fbcd75463ede12da367301678a4cc161f9e0"
+      }
+    ]
+  },
+  "extras": {
+    "leaves": [
+      {
+        "data": "0017d9ef115f342115c33b26a82c120ffa0dd68c"
+      },
+      {
+        "data": "Olivier Lalonde"
+      },
+      "9168de2202a7808353888587a510e0d04132abc56fe02b9ae847c2760e073b16"
+    ]
+  }
+}
