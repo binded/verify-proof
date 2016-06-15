@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import merkletree, { verifyProof } from 'merkletree'
 import { createHash } from 'crypto'
+import request from 'superagent'
 
 const blockaiVerify = (_proof) => {
   const proof = _proof.proof ? _proof.proof : _proof
@@ -18,12 +19,12 @@ const blockaiVerify = (_proof) => {
     extras,
   } = proof
 
+  const dataUrl = extras.dataUrl
   const hashAlgorithm = (hash_type || 'sha256').replace('-', '')
 
-  const hash = (input) => {
-    const hasher = createHash(hashAlgorithm)
-    return hasher.update(input).digest('hex')
-  }
+  // For backward compatibility datahash uses sha1 before sha-256
+  const sha1 = (input) => createHash('sha1').update(input).digest('hex')
+  const computeHash = (input) => createHash(hashAlgorithm).update(input).digest('hex')
 
   // Sync method to check if target hash is valid with respect to
   // extras.leaves
@@ -31,7 +32,7 @@ const blockaiVerify = (_proof) => {
     const leaves = extras.leaves.map((maybeLeaf) => {
       const leaf = typeof maybeLeaf === 'string'
         ? maybeLeaf
-        : hash(maybeLeaf.data)
+        : computeHash(maybeLeaf.data)
       return leaf
     })
     const tree = merkletree(leaves)
@@ -45,9 +46,27 @@ const blockaiVerify = (_proof) => {
 
   // Async method to verify if downloading dataUrl produces
   // expected hash
-  const isDataHashValid = () => {
-
-  }
+  const isDataHashValid = () => Promise.resolve()
+    .then(() => new Promise((resolve, reject) => (
+      request
+        .get(dataUrl)
+        .buffer(true)
+        .end((err, response) => {
+          if (err) return reject(err)
+          return resolve(response)
+        })
+    )))
+    .then((response) => {
+      // first leaf is data hash by convention...
+      const expectedDataHash = computeHash(extras.leaves[0].data)
+      console.log(response.headers)
+      const data = response.text
+      // TODO: decode body to buffer?
+      console.log(data.substring(0, 10))
+      // Due to backward compatibility we need to do a double hash
+      const hash = computeHash(sha1(data))
+      return hash === expectedDataHash
+    })
 
   // Async method that checks how many confirmations transaction
   // holding merkle root has

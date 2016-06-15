@@ -23,6 +23,7 @@ const loadTestData = (name, baseUrl) => {
 const loadAllTestData = (baseUrl) => [
   'confirmed',
   'invalid',
+  'text',
 ].reduce((acc, name) => ({
   ...acc,
   [name]: loadTestData(name, baseUrl),
@@ -34,8 +35,8 @@ test('start http server to serve data/ files', (t) => {
   // start test server
   const app = express().use(express.static(testDataPath))
   httpServer = app.listen()
-  const { address, port } = httpServer.address()
-  const baseUrl = `http://${address}:${port}`
+  const { port } = httpServer.address()
+  const baseUrl = `http://localhost:${port}`
   testData = loadAllTestData(baseUrl)
   t.end()
 })
@@ -54,6 +55,16 @@ test('isMerkleRootValid', (t) => {
   t.ok(confirmed.isMerkleRootValid(), 'merle root is valid')
   t.notOk(invalid.isMerkleRootValid(), 'merkle root is not valid')
   t.end()
+})
+
+test('isDataHashValid', (t) => {
+  t.plan(3)
+  const text = blockaiVerify(testData.text)
+  const confirmed = blockaiVerify(testData.confirmed)
+  const invalid = blockaiVerify(testData.invalid)
+  // text.isDataHashValid().then((isValid) => t.ok(isValid)).catch(t.fail)
+  confirmed.isDataHashValid().then((isValid) => t.ok(isValid)).catch(t.fail)
+  // invalid.isDataHashValid().then((isValid) => t.notOk(isValid)).catch(t.fail)
 })
 
 test('close http server', (t) => {
