@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import merkletree, { verifyProof } from 'merkletree'
 import { createHash } from 'crypto'
-import request from 'superagent'
+import axios from 'axios'
 
 const blockaiVerify = (_proof) => {
   const proof = _proof.proof ? _proof.proof : _proof
@@ -47,22 +47,16 @@ const blockaiVerify = (_proof) => {
   // Async method to verify if downloading dataUrl produces
   // expected hash
   const isDataHashValid = () => Promise.resolve()
-    .then(() => new Promise((resolve, reject) => (
-      request
-        .get(dataUrl)
-        .buffer(true)
-        .end((err, response) => {
-          if (err) return reject(err)
-          return resolve(response)
-        })
-    )))
+    .then(() => axios({
+      method: 'GET',
+      url: dataUrl,
+      responseType: 'arraybuffer',
+    }))
     .then((response) => {
+      // console.log(response)
+      const { data } = response
       // first leaf is data hash by convention...
       const expectedDataHash = computeHash(extras.leaves[0].data)
-      console.log(response.headers)
-      const data = response.text
-      // TODO: decode body to buffer?
-      console.log(data.substring(0, 10))
       // Due to backward compatibility we need to do a double hash
       const hash = computeHash(sha1(data))
       return hash === expectedDataHash

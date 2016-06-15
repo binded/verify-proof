@@ -62,9 +62,9 @@ test('isDataHashValid', (t) => {
   const text = blockaiVerify(testData.text)
   const confirmed = blockaiVerify(testData.confirmed)
   const invalid = blockaiVerify(testData.invalid)
-  // text.isDataHashValid().then((isValid) => t.ok(isValid)).catch(t.fail)
+  text.isDataHashValid().then((isValid) => t.ok(isValid)).catch(t.fail)
   confirmed.isDataHashValid().then((isValid) => t.ok(isValid)).catch(t.fail)
-  // invalid.isDataHashValid().then((isValid) => t.notOk(isValid)).catch(t.fail)
+  invalid.isDataHashValid().then((isValid) => t.notOk(isValid)).catch(t.fail)
 })
 
 test('close http server', (t) => {

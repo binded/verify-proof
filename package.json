@@ -56,7 +56,6 @@
   },
   "dependencies": {
     "axios": "^0.12.0",
-    "merkletree": "^1.4.2",
-    "superagent": "^2.0.0"
+    "merkletree": "^1.4.2"
   }
 }
