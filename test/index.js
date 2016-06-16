@@ -25,6 +25,7 @@ const loadAllTestData = (baseUrl) => [
   'invalid',
   'text',
   'somewhatvalid',
+  'emptybranch',
 ].reduce((acc, name) => ({
   ...acc,
   [name]: loadTestData(name, baseUrl),
@@ -40,6 +41,27 @@ test('start http server to serve data/ files', (t) => {
   const baseUrl = `http://localhost:${port}`
   testData = loadAllTestData(baseUrl)
   t.end()
+})
+
+test('empty branch', (t) => {
+  t.plan(1)
+  const emptybranch = blockaiVerify(testData.emptybranch)
+  emptybranch
+    .analyze()
+    .then((results) => {
+      results.confirmations = 4097
+      t.deepEqual(results, {
+        validations: {
+          isTargetHashValid: true,
+          isMerkleRootValid: true,
+          isDataHashValid: true,
+          isTxValid: true,
+        },
+        confirmations: 4097,
+        isValid: true,
+      }, 'text')
+    })
+    .catch(t.fail)
 })
 
 test('isTargetHashValid', (t) => {
