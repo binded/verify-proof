@@ -36,7 +36,7 @@ export default class VerifyProof extends Component {
           })
       })
       .catch((err) => {
-        console.log('errrror!')
+        // console.log('errrror!')
         /* eslint-disable no-console */
         console.error(err.stack)
         this.setState({ status: { error: true, message: err.message } })
