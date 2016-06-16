@@ -5,6 +5,13 @@ import axios from 'axios'
 
 import { endsWith } from './utils'
 
+const getSha1 = (proof) => proof.extras.leaves[0].data
+
+const guessDataUrl = (proof) => {
+  const baseUrl = 'https://api.blockai.com/v1'
+  return `${baseUrl}/registrations/sha1/${getSha1(proof)}/download`
+}
+
 const blockaiVerify = (_proof, {
   magicNumber = 'b10c',
 } = {}) => {
@@ -23,8 +30,9 @@ const blockaiVerify = (_proof, {
     extras,
   } = proof
 
-  const dataUrl = extras.dataUrl
-  const hashAlgorithm = (hash_type || 'sha256').replace('-', '')
+  const dataUrl = extras.dataUrl ? extras.dataUrl : guessDataUrl(proof)
+
+  const hashAlgorithm = (hash_type || 'sha256').replace('-', '').toLowerCase()
 
   // For backward compatibility datahash uses sha1 before sha-256
   const sha1 = (input) => createHash('sha1').update(input).digest('hex')
@@ -60,7 +68,7 @@ const blockaiVerify = (_proof, {
       // console.log(response)
       const { data } = response
       // first leaf is data hash by convention...
-      const expectedDataHash = computeHash(extras.leaves[0].data)
+      const expectedDataHash = computeHash(getSha1(proof))
       // Due to backward compatibility we need to do a double hash
       const hash = computeHash(sha1(data))
       return hash === expectedDataHash
@@ -155,6 +163,7 @@ const blockaiVerify = (_proof, {
     isTxValid,
     getConfirmations,
     analyze,
+    dataUrl,
   }
 }
 

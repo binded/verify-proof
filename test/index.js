@@ -143,6 +143,39 @@ test('analyze', (t) => {
     .catch(t.fail)
 })
 
+test('infer data url and analyze', (t) => {
+  // sete dataUrl to null
+  const remoteProof = {
+    proof: {
+      ...testData.confirmed.proof,
+      extras: {
+        ...testData.confirmed.proof.extras,
+        dataUrl: null,
+      },
+    },
+  }
+  const remote = blockaiVerify(remoteProof)
+  const expectedUrl = 'https://api.blockai.com/v1/registrations/sha1/9017d9ef115f342115c33b26a82c120ffa0dd68c/download'
+  t.equal(remote.dataUrl, expectedUrl)
+  remote
+    .analyze()
+    .then((results) => {
+      results.confirmations = 4097
+      t.deepEqual(results, {
+        validations: {
+          isTargetHashValid: true,
+          isMerkleRootValid: true,
+          isDataHashValid: true,
+          isTxValid: true,
+        },
+        confirmations: 4097,
+        isValid: true,
+      }, 'remote')
+      t.end()
+    })
+    .catch(t.fail)
+})
+
 test('close http server', (t) => {
   httpServer.close()
   t.end()
