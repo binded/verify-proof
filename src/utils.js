@@ -14,6 +14,7 @@ export const endsWith = (str, searchString, pos) => {
 }
 
 // Taken from http://stackoverflow.com/a/9458996/96855
+/*
 const arrayBufferToBase64 = (buffer) => {
   let binary = ''
   const bytes = new Uint8Array(buffer)
@@ -28,12 +29,10 @@ export const bufferToBase64 =
   typeof window === 'undefined'
   ? buffer => buffer.toString('base64')
   : arrayBufferToBase64
+  */
 
 export const arrayBufferToBuffer = (response) => {
   if (Buffer.isBuffer(response.data)) return response
-  const data = response.data
-  // const bStr = bufferToBase64(data)
-  const buf = new Buffer(data, 'base64')
-  response.data = buf
+  response.data = new Buffer(response.data)
   return response
 }

@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
 import merkletree, { verifyProof } from 'merkletree'
 import { createHash } from 'crypto'
 import axios from 'axios'
 
-import { endsWith, bufferToBase64, arrayBufferToBuffer } from './utils'
+import { endsWith, arrayBufferToBuffer } from './utils'
 
 const getSha1 = (proof) => proof.extras.leaves[0].data
 
@@ -12,16 +11,14 @@ const guessDataUrl = (proof) => {
   return `${baseUrl}/registrations/sha1/${getSha1(proof)}/download`
 }
 
-const blockaiVerify = (_proof, {
-  magicNumber = 'b10c',
-} = {}) => {
+const blockaiVerify = (_proof) => {
   const proof = _proof.proof ? _proof.proof : _proof
   const {
     header: {
       hash_type,
       merkle_root,
       tx_id,
-      timestamp,
+      // timestamp,
     } = {},
     target: {
       target_hash,
