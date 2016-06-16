@@ -3,7 +3,7 @@ import merkletree, { verifyProof } from 'merkletree'
 import { createHash } from 'crypto'
 import axios from 'axios'
 
-import { endsWith } from './utils'
+import { endsWith, bufferToBase64, arrayBufferToBuffer } from './utils'
 
 const getSha1 = (proof) => proof.extras.leaves[0].data
 
@@ -22,12 +22,12 @@ const blockaiVerify = (_proof, {
       merkle_root,
       tx_id,
       timestamp,
-    },
+    } = {},
     target: {
       target_hash,
-      target_proof,
-    },
-    extras,
+      target_proof = [],
+    } = {},
+    extras = { leaves: [] },
   } = proof
 
   const dataUrl = extras.dataUrl ? extras.dataUrl : guessDataUrl(proof)
@@ -64,13 +64,15 @@ const blockaiVerify = (_proof, {
       url: dataUrl,
       responseType: 'arraybuffer',
     }))
+    .then(arrayBufferToBuffer)
     .then((response) => {
-      // console.log(response)
       const { data } = response
       // first leaf is data hash by convention...
       const expectedDataHash = computeHash(getSha1(proof))
       // Due to backward compatibility we need to do a double hash
       const hash = computeHash(sha1(data))
+
+      // console.log(hash)
       return hash === expectedDataHash
     })
 

@@ -13,3 +13,27 @@ export const endsWith = (str, searchString, pos) => {
   return lastIndex !== -1 && lastIndex === position
 }
 
+// Taken from http://stackoverflow.com/a/9458996/96855
+const arrayBufferToBase64 = (buffer) => {
+  let binary = ''
+  const bytes = new Uint8Array(buffer)
+  const len = bytes.byteLength
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i])
+  }
+  return window.btoa(binary)
+}
+
+export const bufferToBase64 =
+  typeof window === 'undefined'
+  ? buffer => buffer.toString('base64')
+  : arrayBufferToBase64
+
+export const arrayBufferToBuffer = (response) => {
+  if (Buffer.isBuffer(response.data)) return response
+  const data = response.data
+  // const bStr = bufferToBase64(data)
+  const buf = new Buffer(data, 'base64')
+  response.data = buf
+  return response
+}

@@ -19,7 +19,7 @@ const App = () => (
     </div>
     <footer style={{ margin: '20px 0 20px 0' }}>
       <div className="row">
-        <div className="col-md-12">
+        <div className="col-md-12 text-small">
           <p>
             This verification tool runs completely client side and its source code
             is open source.

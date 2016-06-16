@@ -22,8 +22,10 @@ export default class ProofInput extends Component {
     })
   }
 
+  /* eslint-disable no-console */
   onClickVerify() {
-    const { onProof } = this.props
+    const { onProof, onClickVerify } = this.props
+    onClickVerify()
     const { url } = this.state
     this.setState({
       status: { pending: true },
@@ -37,16 +39,19 @@ export default class ProofInput extends Component {
         }
         return data
       })
+      .catch((err) => {
+        console.error(err)
+        console.error(err.stack)
+        this.setState({
+          status: { error: true, message: err.message || 'Error retrieving proof' },
+        })
+        throw err
+      })
       .then((proof) => {
         this.setState({
           status: { success: true },
         })
         onProof(proof)
-      })
-      .catch((err) => {
-        this.setState({
-          status: { error: true, message: err.message },
-        })
       })
   }
 
@@ -56,7 +61,7 @@ export default class ProofInput extends Component {
     const disabled = isPending || !isUrl(url)
 
     return (
-      <div className="form">
+      <form className="form" onSubmit={this.onClickVerify}>
         {status && status.error && (
           <div className="alert alert-warning">
             {status.message}
@@ -72,6 +77,7 @@ export default class ProofInput extends Component {
         </div>
         <div className="form-group">
           <button
+            type="submit"
             disabled={disabled}
             className="btn btn-primary btn-block"
             onClick={this.onClickVerify}
@@ -79,7 +85,7 @@ export default class ProofInput extends Component {
             Verify
           </button>
         </div>
-      </div>
+      </form>
     )
   }
 }

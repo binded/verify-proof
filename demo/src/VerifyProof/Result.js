@@ -1,7 +1,31 @@
 import React from 'react'
 
+export const NotVerifiedAlert = () => (
+  <div className="alert alert-danger text-center">
+    <h1 style={{ margin: 0 }}>
+      <span className="glyphicon glyphicon-remove" />
+      {' '}Proof Not Verified
+    </h1>
+  </div>
+)
+
+export const NotVerifiedError = ({ status }) => (
+  <div>
+    <NotVerifiedAlert />
+    <p className="text-danger">Error: {status.message}</p>
+  </div>
+)
+
 export default ({
-  result: {
+  result,
+  status,
+}) => {
+  if (!result && status.error) {
+    return <NotVerifiedError status={status} />
+  }
+  if (!result) return
+
+  const {
     isValid,
     confirmations,
     validations: {
@@ -10,16 +34,39 @@ export default ({
       isDataHashValid,
       isTxValid,
     },
-  },
-}) => {
+    verifiedData: {
+      dataUrl,
+      registeredBy,
+      txId,
+    },
+  } = result
+
+  const txLink = (
+    <a target="_blank" href={`https://blockchain.info/tx/${txId}`}>{confirmations}</a>
+  )
+
   const renderValid = () => (
     <div>
-      <div className="alert alert-success">
-        Proof successfuly verified!
+      <div className="alert alert-success text-center">
+        <h1 style={{ margin: 0 }}>
+          <span className="glyphicon glyphicon-ok" />
+          {' '}Proof Verified
+        </h1>
       </div>
-      <p>The proof has {confirmations} confirmations.</p>
+      <div className="alert alert-success">
+        <h4>Verified Data</h4>
+        <ul>
+          <li>
+            <strong>File:</strong>
+            {' '}<a href={dataUrl} target="_blank" download>Download file</a>
+          </li>
+          <li><strong>Registered by:</strong> {registeredBy}</li>
+          <li><strong>Blockchain Confirmations:</strong> {txLink}</li>
+        </ul>
+      </div>
     </div>
   )
+
   const renderInvalid = () => {
     const messages = []
     if (!isTargetHashValid) {
@@ -36,15 +83,15 @@ export default ({
     }
     return (
       <div>
-        <div className="alert alert-danger">
-          This proof does not appear to be valid!
+        <NotVerifiedAlert />
+        <div>
+          <p>
+            The proof failed the following validations:
+          </p>
+          <ul className="text-danger">
+            {messages.map((msg, i) => (<li key={i}>{msg}</li>))}
+          </ul>
         </div>
-        <p>
-          The proof failed the following validations:
-        </p>
-        <ul>
-          {messages.map((msg, i) => (<li key={i}>{msg}</li>))}
-        </ul>
       </div>
     )
   }

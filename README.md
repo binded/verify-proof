@@ -46,3 +46,5 @@ proof.analyze().then((results) => {
   */
 })
 ```
+
+TODO: cli installed with `npm install -g blockai-verify`

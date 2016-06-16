@@ -1,11 +1,12 @@
 module.exports = {
+  devtool: 'inline-source-map',
+  debug: true,
   context: `${__dirname}/src`,
   entry: './app.js',
   output: {
     filename: 'bundle.js',
     path: `${__dirname}/dist/`,
   },
-  debug: true,
   module: {
     loaders: [
       {
