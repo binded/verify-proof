@@ -36,7 +36,6 @@ export default class VerifyProof extends Component {
           })
       })
       .catch((err) => {
-        // console.log('errrror!')
         /* eslint-disable no-console */
         console.error(err.stack)
         this.setState({ status: { error: true, message: err.message } })
@@ -49,8 +48,6 @@ export default class VerifyProof extends Component {
 
   render() {
     const { result, status } = this.state
-    console.log('render')
-    console.log(status)
     return (
       <div className="col-md-offset-3 col-md-6">
         <div className="row">
