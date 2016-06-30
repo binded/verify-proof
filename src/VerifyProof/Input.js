@@ -10,8 +10,14 @@ export default class ProofInput extends Component {
     this.onChangeUrl = this.onChangeUrl.bind(this)
     this.onClickVerify = this.onClickVerify.bind(this)
     this.state = {
-      url: '',
+      url: props.url || '',
       status: null,
+    }
+  }
+
+  componentWillMount() {
+    if (this.state.url) {
+      this.onClickVerify()
     }
   }
 

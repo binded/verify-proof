@@ -52,7 +52,11 @@ export default class VerifyProof extends Component {
       <div className="col-md-offset-3 col-md-6">
         <div className="row">
           <div className="col-md-12">
-            <Input onClickVerify={this.reset} onProof={this.onProof} />
+            <Input
+              url={this.props.proofUrl}
+              onClickVerify={this.reset}
+              onProof={this.onProof}
+            />
           </div>
           <div className="col-md-12">
             {status.pending && (
