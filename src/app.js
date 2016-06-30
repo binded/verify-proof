@@ -3,7 +3,7 @@ import React from 'react'
 
 import VerifyProof from './VerifyProof'
 
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 
 const App = ({ location: { query } }) => (
   <div className="container">
@@ -35,9 +35,15 @@ const App = ({ location: { query } }) => (
   </div>
 )
 
-const routes = [
-  <Route path="/" component={App} />,
-]
+let basePath = window.location.pathname
+basePath = basePath.split('/').filter(part => part.length).join('/')
+if (!basePath) basePath = '/'
+
+const routes = (
+  <Route path={basePath}>
+    <IndexRoute component={App} />,
+  </Route>
+)
 
 ReactDOM.render(
   <Router history={browserHistory} routes={routes} />,
