@@ -3,7 +3,9 @@ import React from 'react'
 
 import VerifyProof from './VerifyProof'
 
-const App = () => (
+import { Router, Route, browserHistory } from 'react-router'
+
+const App = ({ location: { query } }) => (
   <div className="container">
     <div className="row">
       <div className="text-center">
@@ -15,7 +17,7 @@ const App = () => (
       </div>
     </div>
     <div className="row">
-      <VerifyProof />
+      <VerifyProof proofUrl={query.url} />
     </div>
     <footer style={{ margin: '20px 0 20px 0' }}>
       <div className="row">
@@ -33,7 +35,11 @@ const App = () => (
   </div>
 )
 
+const routes = [
+  <Route path="/" component={App} />,
+]
+
 ReactDOM.render(
-  <App />,
+  <Router history={browserHistory} routes={routes} />,
   document.getElementById('app')
 )
