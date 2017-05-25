@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/blockai/blockai-verify.svg?branch=master)](https://travis-ci.org/blockai/blockai-verify)
 
-This is a client side library and web UI for verifying Blockai issued proofs.
+This is a client side library and web UI for verifying Binded/Blockai issued proofs.
 
 Proofs are composed of a merkle branch, original data and a root hash which is written on the Bitcoin blockchain, effectively timestamping the data.
 
@@ -22,7 +22,7 @@ npm install --save blockai-verify
 import blockaiVerify from 'blockai-verify'
 import fs from 'fs'
 
-const proofData = JSON.parse(fs.readFileSync('./some-blockai-proof.json', {
+const proofData = JSON.parse(fs.readFileSync('./some-blockai-or-binded-proof.json', {
   encoding: 'utf-8',
 }))
 
