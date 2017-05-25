@@ -9,10 +9,10 @@ const App = ({ location: { query } }) => (
   <div className="container">
     <div className="row">
       <div className="text-center">
-        <a href="https://blockai.com" style={{ margin: 20, display: 'block' }}>
-          <img width="200" src="static/logo.png" alt="Blockai Verify" />
+        <a href="https://binded.com" style={{ margin: 20, display: 'block' }}>
+          <img width="200" src="static/logo.png" alt="Binded Verify" />
         </a>
-        <h2>Blockai Proof Verification</h2>
+        <h2>Binded Proof Verification</h2>
         <br />
       </div>
     </div>
@@ -28,6 +28,9 @@ const App = ({ location: { query } }) => (
           </p>
           <p>
             Github: <a href="https://github.com/blockai/blockai-verify">blockai/blockai-verify</a>
+          </p>
+          <p>
+            Binded was formerly known as Blockai.
           </p>
         </div>
       </div>
