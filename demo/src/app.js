@@ -27,7 +27,7 @@ const App = ({ location: { query } }) => (
             is open source.
           </p>
           <p>
-            Github: <a href="https://github.com/blockai/blockai-verify">blockai/blockai-verify</a>
+            Github: <a href="https://github.com/binded/verify-proof">binded/verify-proof</a>
           </p>
           <p>
             Binded was formerly known as Blockai.
