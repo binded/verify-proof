@@ -1,7 +1,5 @@
 # verify-proof
 
-Binded was formerly known as Blockai.
-
 [![Build Status](https://travis-ci.org/binded/verify-proof.svg?branch=master)](https://travis-ci.org/binded/verify-proof)
 
 This is a client side library and web UI for verifying Binded issued proofs.
@@ -15,20 +13,20 @@ The proof format is based on [chainpoint proof format](https://github.com/chainp
 ## Install
 
 ```bash
-npm install --save blockai-verify
+npm install --save @binded/verify-proof
 ```
 
 ## Usage
 
 ```javascript
-import blockaiVerify from 'blockai-verify'
+import bindedVerify from '@binded/verify-proof'
 import fs from 'fs'
 
-const proofData = JSON.parse(fs.readFileSync('./some-blockai-or-binded-proof.json', {
+const proofData = JSON.parse(fs.readFileSync('./some-binded-proof.json', {
   encoding: 'utf-8',
 }))
 
-const proof = blockaiVerify(proofData)
+const proof = bindedVerify(proofData)
 
 proof.analyze().then((results) => {
   console.log(results)
@@ -49,4 +47,7 @@ proof.analyze().then((results) => {
 })
 ```
 
-TODO: cli installed with `npm install -g blockai-verify`
+TODO: cli installed with `npm install -g @binded/verify-proof`
+
+NB: Binded was formerly known as Blockai.
+
