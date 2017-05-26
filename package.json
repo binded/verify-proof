@@ -1,7 +1,7 @@
 {
   "name": "@binded/verify-proof",
-  "version": "0.2.0",
-  "description": "Verify Blockai blockchain proofs",
+  "version": "0.2.1",
+  "description": "Verify Binded blockchain proofs",
   "main": "lib/index.js",
   "scripts": {
     "pretest": "npm run lint",
@@ -18,20 +18,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/blockai/blockai-verify.git"
+    "url": "git://github.com/binded/verify-proof.git"
   },
-  "homepage": "https://github.com/blockai/blockai-verify",
+  "homepage": "https://github.com/binded/verify-proof",
   "keywords": [
     "merkle",
     "merkle tree",
     "binary tree",
     "blockai",
+    "binded",
     "blockchain",
     "bitcoin",
     "blockstamp"
   ],
   "bugs": {
-    "url": "https://github.com/blockai/blockai-verify/issues"
+    "url": "https://github.com/binded/verify-proof/issues"
   },
   "author": "Olivier Lalonde <olalonde@gmail.com>",
   "license": "MIT",
