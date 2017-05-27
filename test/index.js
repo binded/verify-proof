@@ -165,7 +165,7 @@ test('analyze', (t) => {
     .catch(t.fail)
 })
 
-test('infer data url and analyze for text', (t) => {
+test.skip('infer data url and analyze for text', (t) => {
   // sete dataUrl to null
   const remoteProof = {
     proof: {
@@ -195,7 +195,10 @@ test('infer data url and analyze for text', (t) => {
       }, 'remote')
       t.end()
     })
-    .catch(t.fail)
+    .catch((err) => {
+      // console.error(err)
+      t.fail(err.message)
+    })
 })
 
 test('infer data url and analyze', (t) => {
