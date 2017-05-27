@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import blockaiVerify from '../src'
+import bindedVerify from '../src'
 import fs from 'fs'
 import path from 'path'
 import express from 'express'
@@ -45,7 +45,7 @@ test('start http server to serve data/ files', (t) => {
 
 test('empty branch', (t) => {
   t.plan(1)
-  const emptybranch = blockaiVerify(testData.emptybranch)
+  const emptybranch = bindedVerify(testData.emptybranch)
   emptybranch
     .analyze()
     .then((results) => {
@@ -65,16 +65,16 @@ test('empty branch', (t) => {
 })
 
 test('isTargetHashValid', (t) => {
-  const confirmed = blockaiVerify(testData.confirmed)
-  const invalid = blockaiVerify(testData.invalid)
+  const confirmed = bindedVerify(testData.confirmed)
+  const invalid = bindedVerify(testData.invalid)
   t.ok(confirmed.isTargetHashValid(), 'target hash is valid')
   t.notOk(invalid.isTargetHashValid(), 'target hash is not valid')
   t.end()
 })
 
 test('isMerkleRootValid', (t) => {
-  const confirmed = blockaiVerify(testData.confirmed)
-  const invalid = blockaiVerify(testData.invalid)
+  const confirmed = bindedVerify(testData.confirmed)
+  const invalid = bindedVerify(testData.invalid)
   t.ok(confirmed.isMerkleRootValid(), 'merle root is valid')
   t.notOk(invalid.isMerkleRootValid(), 'merkle root is not valid')
   t.end()
@@ -82,9 +82,9 @@ test('isMerkleRootValid', (t) => {
 
 test('isDataHashValid', (t) => {
   t.plan(3)
-  const text = blockaiVerify(testData.text)
-  const confirmed = blockaiVerify(testData.confirmed)
-  const invalid = blockaiVerify(testData.invalid)
+  const text = bindedVerify(testData.text)
+  const confirmed = bindedVerify(testData.confirmed)
+  const invalid = bindedVerify(testData.invalid)
   text.isDataHashValid().then((isValid) => t.ok(isValid)).catch(t.fail)
   confirmed.isDataHashValid().then((isValid) => t.ok(isValid)).catch(t.fail)
   invalid.isDataHashValid().then((isValid) => t.notOk(isValid)).catch(t.fail)
@@ -92,9 +92,9 @@ test('isDataHashValid', (t) => {
 
 test('isTxValid', (t) => {
   t.plan(3)
-  const text = blockaiVerify(testData.text)
-  const confirmed = blockaiVerify(testData.confirmed)
-  const invalid = blockaiVerify(testData.invalid)
+  const text = bindedVerify(testData.text)
+  const confirmed = bindedVerify(testData.confirmed)
+  const invalid = bindedVerify(testData.invalid)
   text.isTxValid().then((isValid) => t.ok(isValid)).catch(t.fail)
   confirmed.isTxValid().then((isValid) => t.ok(isValid)).catch(t.fail)
   invalid.isTxValid().then((isValid) => t.notOk(isValid)).catch(t.fail)
@@ -102,9 +102,9 @@ test('isTxValid', (t) => {
 
 test('getConfirmations', (t) => {
   t.plan(3)
-  const text = blockaiVerify(testData.text)
-  const confirmed = blockaiVerify(testData.confirmed)
-  const invalid = blockaiVerify(testData.invalid)
+  const text = bindedVerify(testData.text)
+  const confirmed = bindedVerify(testData.confirmed)
+  const invalid = bindedVerify(testData.invalid)
   // text.getConfirmations().then((confirms) => console.log(confirms)).catch(t.fail)
   text.getConfirmations().then((confirms) => t.ok(confirms > 100)).catch(t.fail)
   confirmed.getConfirmations().then((confirms) => t.ok(confirms > 100)).catch(t.fail)
@@ -113,9 +113,9 @@ test('getConfirmations', (t) => {
 
 test('analyze', (t) => {
   t.plan(3)
-  const text = blockaiVerify(testData.text)
-  const invalid = blockaiVerify(testData.invalid)
-  const somewhatvalid = blockaiVerify(testData.somewhatvalid)
+  const text = bindedVerify(testData.text)
+  const invalid = bindedVerify(testData.invalid)
+  const somewhatvalid = bindedVerify(testData.somewhatvalid)
   text
     .analyze()
     .then((results) => {
@@ -176,8 +176,8 @@ test('infer data url and analyze for text', (t) => {
       },
     },
   }
-  const remote = blockaiVerify(remoteProof)
-  const expectedUrl = 'https://api.blockai.com/v1/registrations/sha1/e206d0c8ab349cc4b708b443607379e63eba7762/download'
+  const remote = bindedVerify(remoteProof)
+  const expectedUrl = 'https://api.binded.com/v1/registrations/sha1/e206d0c8ab349cc4b708b443607379e63eba7762/download'
   t.equal(remote.dataUrl, expectedUrl)
   remote
     .analyze()
@@ -209,8 +209,8 @@ test('infer data url and analyze', (t) => {
       },
     },
   }
-  const remote = blockaiVerify(remoteProof)
-  const expectedUrl = 'https://api.blockai.com/v1/registrations/sha1/9017d9ef115f342115c33b26a82c120ffa0dd68c/download'
+  const remote = bindedVerify(remoteProof)
+  const expectedUrl = 'https://api.binded.com/v1/registrations/sha1/9017d9ef115f342115c33b26a82c120ffa0dd68c/download'
   t.equal(remote.dataUrl, expectedUrl)
   remote
     .analyze()

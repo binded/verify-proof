@@ -7,11 +7,11 @@ import { endsWith, arrayBufferToBuffer } from './utils'
 const getSha1 = (proof) => proof.extras.leaves[0].data
 
 const guessDataUrl = (proof) => {
-  const baseUrl = 'https://api.blockai.com/v1'
+  const baseUrl = 'https://api.binded.com/v1'
   return `${baseUrl}/registrations/sha1/${getSha1(proof)}/download`
 }
 
-const blockaiVerify = (_proof) => {
+const bindedVerify = (_proof) => {
   const proof = _proof.proof ? _proof.proof : _proof
   const {
     header: {
@@ -166,4 +166,4 @@ const blockaiVerify = (_proof) => {
   }
 }
 
-export default blockaiVerify
+export default bindedVerify
