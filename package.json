@@ -7,7 +7,7 @@
     "pretest": "npm run lint",
     "build": "babel ./src --out-dir ./lib --copy-files",
     "lint": "eslint src/ test/",
-    "release": "npm run build && npm publish",
+    "release": "npm run build && npm publish && npm run gh-pages",
     "preversion": "npm test",
     "start:dev": "cd demo && python -m SimpleHTTPServer",
     "build:dev": "nodemon --exec npm run gh-pages:build",
