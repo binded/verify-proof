@@ -74,7 +74,8 @@ const bindedVerify = (_proof) => {
     })
 
   // Memoized getTx so we dont need to retrieve tx multiple times
-  const getTx = (() => {
+  /*
+  const getTxBlockrIo = (() => {
     let cachedTx
     return () => Promise.resolve().then(() => {
       if (cachedTx) return cachedTx
@@ -85,6 +86,42 @@ const bindedVerify = (_proof) => {
         // console.log(cachedTx)
         return cachedTx
       })
+    })
+  })()
+  */
+
+  const blockchainInfoToBlockrFormat = (bcTx) => {
+    const tx = bcTx
+    tx.vouts = bcTx.out.map((vout) => ({
+      ...vout,
+      extras: {
+        script: vout.script,
+      },
+    }))
+    tx.confirmations = bcTx.block_height
+    return tx
+  }
+
+  const getTx = (() => {
+    let cachedTx
+    return () => Promise.resolve().then(() => {
+      if (cachedTx) return cachedTx
+      // TODO: support more than one blockchain api
+      const txUrl = `https://blockchain.info/rawtx/${tx_id}?cors=true`
+      return axios.get(txUrl)
+        .catch((err) => {
+          // For some reason, blockchain.info returns 500 instead of 404 when
+          // transaction not found.
+          if (err.status === 500 && err.data.match(/Transaction not found/)) {
+            err.status = 404
+          }
+          throw err
+        })
+        .then((response) => {
+          cachedTx = blockchainInfoToBlockrFormat(response.data)
+          // console.log(cachedTx)
+          return cachedTx
+        })
     })
   })()
 
