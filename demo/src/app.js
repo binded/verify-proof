@@ -24,7 +24,7 @@ const App = ({ location: { query } }) => (
         <div className="col-md-12 text-small">
           <p>
             This verification tool runs completely client side and its source code
-            is open source. <a href="https://help.binded.com/blockchain">How does it work?</a>
+            is open source. <a href="https://help.binded.com/blockchain/how-does-binded-use-the-blockchain">How does it work?</a>
           </p>
           <p>
             Github: <a href="https://github.com/binded/verify-proof">binded/verify-proof</a>
